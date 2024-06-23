@@ -22,7 +22,6 @@ function Register() {
 
             const data = await response.json();
             if (!response.ok) {
-                // Obsługa błędów walidacji zgodnie z RFC 9110
                 if (data.errors) {
                     const errorMessages = Object.values(data.errors).flatMap(messages => messages);
                     setError('Błąd walidacji: ' + errorMessages.join(', '));

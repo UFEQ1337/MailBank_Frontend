@@ -24,10 +24,11 @@ function Login({ setIsLoggedIn }) {
             }
 
             localStorage.setItem('token', data.token);
+            localStorage.setItem('userId', data.userId); // Przechowujemy userId w localStorage
             setIsLoggedIn(true);
             navigate('/dashboard');
         } catch (error) {
-            console.error('Failed to fetch:', error);
+            console.error('Logowanie nie powiodło się:', error);
             setError('Logowanie nie powiodło się: ' + error.message);
         }
     };

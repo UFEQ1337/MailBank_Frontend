@@ -1,14 +1,17 @@
-/* src/components/Dashboard.css */
-
 .dashboard-container {
     padding: 20px;
     background-color: #f5f5f5;
-    min-height: calc(100vh - 110px); /* Odjęcie wysokości nagłówka */
+    min-height: calc(100vh - 102px); /* Odjęcie wysokości nagłówka */
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start; /* Zachowanie górnego wyrównania */
     overflow-y: auto; /* Przewijanie pionowe tylko w razie potrzeby */
+}
+
+.dashboard-container h2 {
+    text-align: center;
+    font-size: 2rem;
 }
 
 .dashboard-widgets {
@@ -25,6 +28,12 @@
     flex: 1;
     max-width: calc(50% - 10px); /* Maksymalna szerokość widgetu na połowę ekranu z odstępem 20px */
     margin-bottom: 20px; /* Odstęp między widgetami */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.widget:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .widget h3 {
@@ -43,12 +52,49 @@
 }
 
 .transaction {
-    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
 }
 
 .transaction:last-child {
     border-bottom: none;
+}
+
+.transaction:hover {
+    background-color: #f9f9f9;
+}
+
+.transaction .transaction-type {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.transaction .transaction-type .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.transaction .transaction-type.outgoing {
+    color: #ff5722; /* Czerwony dla wychodzących */
+}
+
+.transaction .transaction-type.incoming {
+    color: #4caf50; /* Zielony dla przychodzących */
+}
+
+.transaction .transaction-details {
+    text-align: right;
+}
+
+.transaction .transaction-details p {
+    margin: 5px 0;
 }
 
 strong {
@@ -66,6 +112,30 @@ strong {
     font-size: 2.5em;
     font-weight: bold;
     color: #4CAF50;
+}
+
+.transactions-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.transactions-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.transactions-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 @media (max-width: 768px) {

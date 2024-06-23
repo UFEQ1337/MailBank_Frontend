@@ -1,73 +1,51 @@
 /* src/components/Home.css */
 
-.home-container {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    background: linear-gradient(135deg, #71b7e6, #9b59b6);
-    font-family: 'Poppins', sans-serif;
-}
-
-.background-animation {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('https://www.transparenttextures.com/patterns/brushed-alum.png');
-    animation: backgroundAnimation 20s infinite linear;
-    z-index: 1;
-    opacity: 0.1;
-}
-
-@keyframes backgroundAnimation {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: 100% 100%;
-    }
-}
-
-.home-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: white;
-}
-
-.home-content h1 {
-    font-size: 4em;
+body {
     margin: 0;
-    font-weight: 700;
-    animation: colorChange 10s infinite alternate, textGlow 2s infinite alternate;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #3f51b5, #5a55ae); /* Gradient tła */
+    background-attachment: fixed;
 }
 
-@keyframes colorChange {
-    0% { color: #ffffff; }
-    25% { color: #ff00ff; }
-    50% { color: #00ffff; }
-    75% { color: #ffff00; }
-    100% { color: #ffffff; }
+.home-container {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Półprzezroczyste białe tło */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 182px); /* Odjęcie wysokości nagłówka */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in-out;
+    backdrop-filter: blur(10px); /* Efekt rozmycia tła */
 }
 
-@keyframes textGlow {
-    from {
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5), 0 0 30px rgba(255, 255, 255, 0.3);
-    }
-    to {
-        text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.7), 0 0 40px rgba(255, 255, 255, 0.5);
-    }
+.home-container h1 {
+    font-size: 3rem;
+    color: #3f51b5;
+    margin-bottom: 20px;
+    animation: slideInFromLeft 1s ease-in-out;
 }
 
-.home-content p {
-    font-size: 1.5em;
+.home-container p {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 20px 0;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.home-container ul {
+    list-style: none;
+    padding: 0;
+    font-size: 1.2rem;
+    color: #666;
     margin-top: 20px;
-    animation: fadeIn 4s ease-in-out;
+    animation: slideInFromRight 1s ease-in-out;
+}
+
+.home-container ul li {
+    margin: 10px 0;
 }
 
 @keyframes fadeIn {
@@ -75,6 +53,28 @@
         opacity: 0;
     }
     to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
         opacity: 1;
     }
 }

@@ -1,52 +1,80 @@
-/* src/components/Transfer.css */
-
 .transfer-container {
-    padding: 20px;
-    background-color: #f5f5f5;
+    padding: 40px 20px; /* Dodano więcej przestrzeni wokół */
+    background-color: #f0f2f5; /* Delikatnie zmieniony kolor tła */
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: calc(100vh - 110px); /* Wysokość dostosowana do całego ekranu minus nagłówek */
 }
 
-.transfer-container h2 {
-    margin-bottom: 20px;
+.transfer-title {
+    font-size: 2.5rem; /* Zwiększony rozmiar tekstu */
     color: #333;
+    margin-bottom: 30px;
+    font-weight: bold; /* Pogrubienie tytułu */
 }
 
 .transfer-form {
     background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px; /* Zwiększona przestrzeń wewnątrz */
+    border-radius: 12px; /* Zaokrąglone rogi */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Zwiększony cień */
     width: 100%;
-    max-width: 400px;
+    max-width: 500px; /* Zwiększona maksymalna szerokość */
+    display: flex;
+    flex-direction: column;
 }
 
-.transfer-form input {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+.form-label {
+    margin-bottom: 12px; /* Zwiększony odstęp */
+    font-size: 1.2em;
+    color: #555;
+    font-weight: 600; /* Pogrubienie etykiet */
+}
+
+.form-input {
+    padding: 12px; /* Zwiększona przestrzeń wewnątrz */
+    margin-bottom: 25px; /* Zwiększony odstęp między polami */
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box; /* Dostosowanie box modelu */
+    transition: border-color 0.3s ease; /* Dodana animacja */
 }
 
-.transfer-form button {
-    width: 100%;
-    padding: 10px;
+.form-input:focus {
+    border-color: #61dafb; /* Kolor obramowania podczas focus */
+    outline: none; /* Usunięcie domyślnego outline */
+}
+
+.form-button {
+    padding: 12px;
     background: #61dafb;
     border: none;
     border-radius: 4px;
     color: white;
-    font-size: 1em;
+    font-size: 1.2em; /* Zwiększony rozmiar tekstu */
+    font-weight: 600; /* Pogrubienie tekstu */
     cursor: pointer;
+    transition: background 0.3s ease; /* Dodana animacja */
 }
 
-.transfer-form button:hover {
+.form-button:hover {
     background: #21a1f1;
 }
 
 .message {
     color: green;
     margin-bottom: 20px;
+    font-size: 1.1em; /* Zwiększony rozmiar tekstu */
+    font-weight: 600; /* Pogrubienie tekstu */
+}
+
+.recipient-status {
+    font-size: 1.1em; /* Zwiększony rozmiar tekstu */
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600; /* Pogrubienie tekstu */
+    text-align: center; /* Wyśrodkowanie tekstu */
 }

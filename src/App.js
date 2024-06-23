@@ -1,10 +1,11 @@
 // src/App.js
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import {Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import Transfer from './components/Transfer';
+import Home from './components/Home';
 import './App.css';
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     const handleLogout = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false);
-        navigate('/login');
+        navigate('/');
     };
 
     return (
@@ -66,6 +67,7 @@ function App() {
                 </nav>
             </header>
             <Routes>
+                <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
                 <Route path="/register" element={<Register />} />
                 {isLoggedIn && <Route path="/dashboard" element={<Dashboard />} />}

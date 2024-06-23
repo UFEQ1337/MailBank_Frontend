@@ -1,4 +1,3 @@
-// src/components/Dashboard.js
 import React, { useEffect, useState } from 'react';
 import './Dashboard.css';
 
@@ -14,7 +13,10 @@ function Dashboard() {
             }
         })
             .then(response => response.json())
-            .then(user => setUserId(user.id))
+            .then(user => {
+                setUserId(user.id);
+                localStorage.setItem('userId', user.id);
+            })
             .catch(error => console.error('Error fetching current user:', error));
     }, []);
 
@@ -41,14 +43,14 @@ function Dashboard() {
         <div className="dashboard-container">
             <h2>Dashboard</h2>
             <div className="dashboard-widgets">
-                <div className="widget">
+                <div className="widget account-summary-widget">
                     <h3>Podsumowanie konta</h3>
                     {user ? (
                         <div className="widget-content">
                             <p><strong>Imię:</strong> {user.firstName}</p>
                             <p><strong>Nazwisko:</strong> {user.lastName}</p>
                             <p><strong>Email:</strong> {user.email}</p>
-                            <p><strong>Ostatnie logowanie:</strong> {new Date(user.lastLogin).toLocaleDateString()}</p>
+                            <p><strong>Ostatnie logowanie:</strong> {new Date(user.lastLogin).toLocaleString()}</p>
                             <p><strong>Status konta:</strong> {translateStatus(user.status)}</p>
                         </div>
                     ) : (
@@ -56,24 +58,33 @@ function Dashboard() {
                     )}
                 </div>
                 <div className="widget bank-account-widget">
-                    <h3>Stan konta bankowego</h3>
-                    {bankAccount ? (
-                        <div className="widget-content">
-                            <p className="balance">{bankAccount.balance.toFixed(2)} PLN</p>
-                        </div>
-                    ) : (
-                        <p>Brak danych konta bankowego</p>
-                    )}
+                    <div className="widget-content">
+                        <p className="balance">{bankAccount.balance.toFixed(2)} PLN</p>
+                    </div>
                 </div>
-                <div className="widget">
+                <div className="widget transactions-widget">
                     <h3>Ostatnie transakcje</h3>
-                    {transactions && transactions.length > 0 ? (
-                        <div className="widget-content">
-                            {transactions.map(transaction => (
+                    {transactions && transactions.$values && transactions.$values.length > 0 ? (
+                        <div className="widget-content transactions-list">
+                            {transactions.$values.slice(0, 10).map(transaction => (
                                 <div key={transaction.id} className="transaction">
-                                    <p><strong>Typ:</strong> {transaction.type}</p>
-                                    <p><strong>Kwota:</strong> {transaction.amount.toFixed(2)} PLN</p>
-                                    <p><strong>Data:</strong> {new Date(transaction.date).toLocaleDateString()}</p>
+                                    <div className={`transaction-type ${transaction.type.toLowerCase()}`}>
+                                        <span className="material-symbols-outlined">
+                                            {transaction.type === "Outgoing" ? "arrow_outward" : "call_received"}
+                                        </span>
+                                        {translateTransactionType(transaction.type)}
+                                    </div>
+                                    <div className="transaction-details">
+                                        <p><strong>Kwota:</strong> {transaction.amount.toFixed(2)} PLN</p>
+                                        <p><strong>Data:</strong> {new Date(transaction.date).toLocaleString()}</p>
+                                        {transaction.type === "Outgoing" && (
+                                            <p><strong>Odbiorca:</strong> {transaction.recipientEmail || 'Nieznany'}</p>
+                                        )}
+                                        {transaction.type === "Incoming" && (
+                                            <p><strong>Nadawca:</strong> {transaction.recipientEmail || 'Nieznany'}</p>
+                                        )}
+                                        <p><strong>Opis:</strong> {transaction.description}</p>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -93,6 +104,17 @@ function Dashboard() {
                 return "Nieaktywne";
             default:
                 return status;
+        }
+    }
+
+    function translateTransactionType(type) {
+        switch (type) {
+            case "Incoming":
+                return "Przychodząca";
+            case "Outgoing":
+                return "Wychodząca";
+            default:
+                return type;
         }
     }
 }
