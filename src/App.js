@@ -1,25 +1,78 @@
-import logo from './logo.svg';
+// src/App.js
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import Login from './components/Login';
+import Register from './components/Register';
+import Dashboard from './components/Dashboard';
+import Transfer from './components/Transfer';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        navigate('/login');
+    };
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <div className="logo">MailBank</div>
+                <nav>
+                    <ul>
+                        {isLoggedIn ? (
+                            <>
+                                <li>
+                                    <Link to="/dashboard">
+                                        <button>Dashboard</button>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/transfer">
+                                        <button>Przelew</button>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <button className="logout-button" onClick={handleLogout}>
+                                        Wyloguj
+                                    </button>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link to="/login">
+                                        <button>Logowanie</button>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/register">
+                                        <button>Rejestracja</button>
+                                    </Link>
+                                </li>
+                            </>
+                        )}
+                    </ul>
+                </nav>
+            </header>
+            <Routes>
+                <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+                <Route path="/register" element={<Register />} />
+                {isLoggedIn && <Route path="/dashboard" element={<Dashboard />} />}
+                {isLoggedIn && <Route path="/transfer" element={<Transfer />} />}
+            </Routes>
+        </div>
+    );
 }
 
 export default App;
